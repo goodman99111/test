@@ -5,7 +5,7 @@ var app = express();
 app.get("/", function(request, responce){
 
   //отправляет ответ
-  responce.send("<h1>Hello</h1");
+  responce.send("<h1>Andrew, сосамбе</h1");
 });
 
 app.get("/about", function(request, responce){
