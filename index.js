@@ -1,7 +1,6 @@
 var express = require("express");
 //создаём объект приложения
 var app = express();
-const PORT = process.env.PORT
 //определяем обработчик для маршрута "/"
 app.get("/", function(request, responce){
 
@@ -19,4 +18,4 @@ app.get("/contact", function(request, responce){
   responce.send("<h1>Contact</h1>");
 });
 //Начинаем прослушивание подключения на 3000 порту
-app.listen(PORT, ()=> console.log("Listening on " + PORT));
+app.listen(process.env.PORT || 3000);
