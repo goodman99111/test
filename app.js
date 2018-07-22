@@ -1,5 +1,5 @@
 var express = require("express");
-//создаём объект приложения
+//создаём объект приложени
 var app = express();
 //определяем обработчик для маршрута "/"
 app.get("/", function(request, responce){
