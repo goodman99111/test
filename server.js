@@ -18,4 +18,4 @@ app.get("/contact", function(request, responce){
   responce.send("<h1>Contact</h1>");
 });
 //Начинаем прослушивание подключения на 3000 порту
-app.listen(process.env.PORT || 3000);
+app.listen(8080);
