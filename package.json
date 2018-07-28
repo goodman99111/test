@@ -2,6 +2,7 @@
   "name": "expressapp",
   "version": "0.0.1",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3"
   }
 }
