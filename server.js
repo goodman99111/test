@@ -14,8 +14,7 @@ app.post("/register", urlencodedParser, function(request, responce) {
 });
 
 app.get("/", function(request, responce){
-
-	responce.send("<h1>Main page</h1>");
+   
 });
 app.get("/contact", function(request, responce){
 
