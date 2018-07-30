@@ -14,9 +14,9 @@
     </style>
   </head>
   <body>
-    <script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+    var socket = io.connect('');
     socket.once('news', function (data){
       console.log(data);
     });
