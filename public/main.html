@@ -14,19 +14,21 @@
     </style>
   </head>
   <body>
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost:8080');
+    socket.once('news', function (data){
+      console.log(data);
+    });
+    function sendText() {
+      var text = document.getElementById("textInputMain").value;//Получаем текст из input
+      socket.emit('my other event', text);//вызываем событие и отправляет текст
+      console.log("send: " + text);
+  }
+  </script>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="textInputMain" name="textInput" autocomplete="off" /><button id="message" type="button" onClick="sendText()">Send</button>
     </form>
-    <script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
-    <script>
-	 var socket = io.connect("http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com");
-
-	 socket.on('news', function (data) {
-		 console.log(data);
-		socket.emit('my other event', { my: 'data' });
-
-	  });
-	  </script>
   </body>
 </html>

@@ -18,9 +18,9 @@ app.get("/", function(request, responce){
 });
 //подключение пользователя
 io.on('connection', function (socket) {
-	console.log("new user connected");
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
+	console.log("new user connected"); //Уведомление о подключении клиента
+  socket.emit('news', { Server: 'connection complete ' }); //генерирует событие "news" и отправляет объект подключившемуся клиенту
+  socket.on('my other event', function (data) {  //Прослушивает событие "on", которое получает сообщение от клиента
     console.log(data);
   });
 });
