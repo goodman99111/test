@@ -21,8 +21,8 @@
       console.log(data);
     });
     function sendText() {
-      var text = document.getElementById("textInputMain").value;//Получаем текст из input
-      socket.emit('my other event', text);//вызываем событие и отправляет текст
+      var text = document.getElementById("textInputMain").value;//Получаем текст из input1
+      socket.emit('my other event', text);//вызываем событие и отправляет текст1
       console.log("send: " + text);
   }
   </script>
