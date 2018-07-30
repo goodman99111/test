@@ -22,7 +22,7 @@
     });
     function sendText() {
       var text = document.getElementById("textInputMain").value;//Получаем текст из input
-      socket.emit('my other event', text);//вызываем событие и отправляет текст2
+      socket.emit('my other event', text);//вызываем событие и отправляет текст
       console.log("send: " + text);
   }
   </script>
