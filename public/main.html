@@ -14,26 +14,21 @@
     </style>
   </head>
   <body>
-<<<<<<< HEAD
     <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io.connect('');
-=======
-    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+    <script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect('http://localhost:8080');
->>>>>>> 0b27c0ed94c4df3eff1caf7ae47ceaa2c68b6ebb
+    var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
     socket.once('news', function (data){
       console.log(data);
     });
     function sendText() {
-<<<<<<< HEAD
       var text = document.getElementById("textInputMain").value;//Получаем текст из input1
       socket.emit('my other event', text);//вызываем событие и отправляет текст1
-=======
+
       var text = document.getElementById("textInputMain").value;//Получаем текст из input
       socket.emit('my other event', text);//вызываем событие и отправляет текст
->>>>>>> 0b27c0ed94c4df3eff1caf7ae47ceaa2c68b6ebb
       console.log("send: " + text);
   }
   </script>
