@@ -1,0 +1,66 @@
+ >
+<head>
+<link href="css/main.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+
+<div id="chat_window">
+  <div id="message_window"></div>
+
+  <textarea max-width="50" style="width:70% "id="message_input" cols="90" id="area"></textarea>
+  <!--<button id="button_send" type="button" style="margin-left:70%" onclick="create()">Press</button>  -->
+  <!--<div  id="button_send" style=" margin-left:70%" onclick="create()"><p id="textButton">Отправить</p></div>-->
+  </div>
+<script>
+function send(e){
+//e = e ||  window.event;
+if(e.charCode == 13) {
+  document.getElementById('message_input').blur();
+  var text = document.getElementById("message_input").value;
+  //document.getElementById("message_input").selectionStart = 0;
+    if(text!="") {
+      var str = '<div class="msg_m">\
+        <div class="msg_top_line"></div>\
+        <span class="msg_text_m_style">'+ text +'</span>\
+        </div<\
+        ';
+var div = document.createElement('div');
+div.innerHTML = str;
+message_window.appendChild(div);
+sendText();
+document.getElementById("message_input").value = "";
+}
+}
+}
+document.addEventListener('keypress', send);
+  var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+  socket.once('news', function (data){
+    console.log(data);
+  });
+  //Уведомление о подключении других пользователей
+  socket.on('user connected', function(data){
+    console.log(data);
+  });
+
+  socket.on('new msg', function(data){//Ожидаем сообщения от пользователей
+    console.log('get: ' + data);
+    var str = '<div class="msg_m">\
+      <div class="msg_top_line"></div>\
+      <span class="msg_text_m_style">'+ data +'</span>\
+      </div<\
+      ';
+      var div = document.createElement('div');
+      div.innerHTML = str;
+      message_window.appendChild(div);
+  })
+
+  function sendText() {
+    var text = document.getElementById("message_input").value;//Получаем текст из input
+    socket.emit('my other event', text);//вызываем событие и отправляет текст
+    console.log("send: " + text);
+}
+</script>
+</body>
+</html>

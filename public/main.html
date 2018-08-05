@@ -14,19 +14,22 @@
     </style>
   </head>
   <body>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect('');
-    <script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
-  <script>
-    var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+    var socket = io.connect('http://localhost:8080');
     socket.once('news', function (data){
       console.log(data);
     });
-    function sendText() {
-      var text = document.getElementById("textInputMain").value;//Получаем текст из input1
-      socket.emit('my other event', text);//вызываем событие и отправляет текст1
+    //Уведомление о подключении других пользователей
+    socket.on('user connected', function(data){
+      console.log(data);
+    });
 
+    socket.on('new msg', function(data){//Ожидаем сообщения от пользователей
+      console.log('get: ' + data);
+    })
+
+    function sendText() {
       var text = document.getElementById("textInputMain").value;//Получаем текст из input
       socket.emit('my other event', text);//вызываем событие и отправляет текст
       console.log("send: " + text);

@@ -1,0 +1,134 @@
+body {
+  background-color: #2f3136;
+}
+
+#chat_window {
+  background-color: #36393f;
+  width: 60%;
+  height: 75%;
+  margin-top: 4%;
+  position: relative;
+  border-radius: 20px;
+  margin-left: 20%;
+  border: 1px solid #181a1f;
+}
+
+#message_window {
+  border-bottom: 1px solid #42454a;
+  position: absolute;
+  width: 95%;
+  height: 80%;
+  left: 2.5%;
+  top: 5%;
+  overflow-y: auto;
+  overflow-x: inherit;
+
+}
+
+#chat_menu {
+  border: 1px solid red;*/
+  width: 99%;
+  height: 10%;
+  border-radius: 0px 0px 0px 20px;
+  position: absolute;
+  margin-top: 35.4%;
+
+
+
+}
+#button_send {
+  position: absolute;
+  bottom: 0%;
+  /*border: 1px solid #a8a8a8;
+  /*padding-top: -2.9%;
+  /*padding-left: 3%;*/
+  font-family: 'Futura', serif;
+  width: 11%;
+  color: #444444;
+  /*text-align: center;*/
+
+}
+
+#button_send:hover {
+  background-color: #F0F0F0;
+  transition: 0.5s linear;
+}
+
+#textButton {
+  margin-top: 7%;
+  text-align: center;
+}
+.msg_m {
+  /*border: 1px solid gray;*/
+  height: 8%;
+  /*width: 20%;*/
+  max-width: 95%;
+  margin-left: 1.5%;
+  margin-top: 3%;
+  top: 20px;
+  /*border-radius: 10px;*/
+  text-align: left;
+  /*display: inline;*/
+  /*clear: both;*/
+  height: auto;
+  /*overflow: auto;*/
+}
+.msg_top_line {
+  position: absolute;
+  width: 95%;
+  border-top: 1px solid #474a4f;
+  margin-top: -10px;
+}
+
+.msg_text_m_style {
+  margin-left: 5px;
+  font-family: 'Monaco', courier, monospace;
+/*  top: 9px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  max-width: 200px;*/
+  text-align: left;
+  height: auto;
+  word-wrap: break-word;
+  color: #c6d2d8;
+}
+
+textarea {
+  /*border-top: 1px solid #f0f0f0;*/
+  /*border-left: 1px solid #f0f0f0;*/
+  resize: none;
+  outline: none;
+  background-color: #484b51;
+  font-size: 14px;
+  color: #c6d2d8;
+  font-family: 'Monaco', #484b51, monospace;
+  /*padding-top: -50px;
+  /*margin-top: 100%;*/
+  border: 1px solid #42454a;
+  position: absolute;
+  text-align: left;
+  bottom: 4%;
+  left:14%;
+  /*padding-top: -20%;*/
+  border-radius: 0px 0px 0px 0px;
+  height: 7%;
+  vertical-align: baseline;
+  padding-left: 4px;
+  padding-top: 6px;
+  wrap: off;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
