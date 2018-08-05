@@ -31,36 +31,49 @@ div.innerHTML = str;
 message_window.appendChild(div);
 sendText();
 document.getElementById("message_input").value = "";
+scroll_toEnd("message_window")
 }
 }
 }
 document.addEventListener('keypress', send);
-  var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
-  socket.once('news', function (data){
-    console.log(data);
-  });
+var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+socket.once('news', function (data){
+  console.log(data);
+});
   //Уведомление о подключении других пользователей
-  socket.on('user connected', function(data){
-    console.log(data);
-  });
+socket.on('user connected', function(data){
+  console.log(data);
+});
 
-  socket.on('new msg', function(data){//Ожидаем сообщения от пользователей
-    console.log('get: ' + data);
-    var str = '<div class="msg_m">\
-      <div class="msg_top_line"></div>\
-      <span class="msg_text_m_style">'+ data +'</span>\
-      </div<\
-      ';
-      var div = document.createElement('div');
-      div.innerHTML = str;
-      message_window.appendChild(div);
-  })
+socket.on('new msg', function(data){//Ожидаем сообщения от пользователей
+  console.log('get: ' + data);
+  var str = '<div class="msg_m">\
+    <div class="msg_top_line"></div>\
+    <span class="msg_text_m_style">'+ data +'</span>\
+    </div<\
+    ';
+    var div = document.createElement('div');
+    div.innerHTML = str;
+    message_window.appendChild(div);
+})
 
-  function sendText() {
-    var text = document.getElementById("message_input").value;//Получаем текст из input
-    socket.emit('my other event', text);//вызываем событие и отправляет текст
-    console.log("send: " + text);
+function sendText() {
+  var text = document.getElementById("message_input").value;//Получаем текст из input
+  socket.emit('my other event', text);//вызываем событие и отправляет текст
+  console.log("send: " + text);
 }
+
+function scroll_toEnd(id){
+  var block = document.getElementById(id);
+  block.scrollTop = block.scrollHeight;
+}
+
+
+</script>
+
+<script>
+var block = document.getElementById('message_window');
+block.scrollTop = block.scrollHeight;
 </script>
 </body>
 </html>
