@@ -40,7 +40,7 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
 socket.once('news', function (data, users_online){
   console.log(data);
   console.log('Users: ' + users_online);
