@@ -58,6 +58,13 @@ body {
   margin-top: 7%;
   text-align: center;
 }
+
+#online_users {
+  position: absolute;
+  left: 45%;
+  top: 53px;
+  font: 15pt sans-serif;
+}
 .msg_m {
   /*border: 1px solid gray;*/
   height: 8%;

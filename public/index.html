@@ -5,16 +5,19 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
-
+<div id="online_users">Online: {{online_users}}</div>
 <div id="chat_window">
   <div id="message_window"></div>
-
   <textarea max-width="50" style="width:70% "id="message_input" cols="90" id="area"></textarea>
   <!--<button id="button_send" type="button" style="margin-left:70%" onclick="create()">Press</button>  -->
   <!--<div  id="button_send" style=" margin-left:70%" onclick="create()"><p id="textButton">Отправить</p></div>-->
   </div>
 <script>
-function send(e){
+var users = sessionStorage.getItem('users');
+window.online = 0;
+
+function send(e)
+{
 //e = e ||  window.event;
 if(e.charCode == 13) {
   document.getElementById('message_input').blur();
@@ -26,26 +29,40 @@ if(e.charCode == 13) {
         <span class="msg_text_m_style">'+ text +'</span>\
         </div<\
         ';
-var div = document.createElement('div');
-div.innerHTML = str;
-message_window.appendChild(div);
-sendText();
-document.getElementById("message_input").value = "";
-scroll_toEnd("message_window");
-}
-}
+ var div = document.createElement('div');
+ div.innerHTML = str;
+ message_window.appendChild(div);
+ sendText();
+ document.getElementById("message_input").value = "";
+ scroll_toEnd("message_window");
+  }
+ }
 }
 document.addEventListener('keypress', send);
-var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
-socket.once('news', function (data){
+
+var socket = io.connect('http://http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+socket.once('news', function (data, users_online){
   console.log(data);
-});
-  //Уведомление о подключении других пользователей
-socket.on('user connected', function(data){
-  console.log(data);
+  console.log('Users: ' + users_online);
+  //sessionStorage.setItem('users', users_online);
+  app_update_onlineUsers.online_users = users_online;
+  status();
 });
 
-socket.on('new msg', function(data){//Ожидаем сообщения от пользователей
+  //Уведомление о подключении других пользователей
+socket.on('user connected', function(data){
+  console.log('New user connected. Users: ' + data);
+  app_update_onlineUsers.online_users++;
+  status();
+});
+
+socket.on('user disconnect', function(data){
+  console.log('User disconnect. Users: ' + data);
+  app_update_onlineUsers.online_users--;
+  status();
+})
+socket.on('new msg', function(data)
+ {//Ожидаем сообщения от пользователей
   console.log('get: ' + data);
   var str = '<div class="msg_m">\
     <div class="msg_top_line"></div>\
@@ -57,24 +74,32 @@ socket.on('new msg', function(data){//Ожидаем сообщения от п�
     message_window.appendChild(div);
     scroll_toEnd("message_window");
 })
-
-function sendText() {
+function sendText(){
   var text = document.getElementById("message_input").value;//Получаем текст из input
   socket.emit('my other event', text);//вызываем событие и отправляет текст
   console.log("send: " + text);
 }
-
 function scroll_toEnd(id){
   var block = document.getElementById(id);
   block.scrollTop = block.scrollHeight;
 }
+localStorage.getItem('users').onchange = function(){
+  alert('123');
+}
+function status()
+{
+  console.log('users: ' + users);
+}
 
-
+///////////////////////////VUE JS////////////////////////////////
+var app_update_onlineUsers = new Vue({
+el: '#online_users',
+data: {
+  online_users: ''
+}
+})
+////////////////////////////////////////////////////////////////////
 </script>
 
-<script>
-var block = document.getElementById('message_window');
-block.scrollTop = block.scrollHeight;
-</script>
 </body>
 </html>
