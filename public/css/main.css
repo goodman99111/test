@@ -62,8 +62,9 @@ body {
 #online_users {
   position: absolute;
   left: 45%;
-  top: 53px;
+  margin-top: 1.6%;
   font: 15pt sans-serif;
+  color: #4F6782;
 }
 .msg_m {
   /*border: 1px solid gray;*/
