@@ -1,10 +1,11 @@
  >
 <head>
 <link href="css/main.css" type="text/css" rel="stylesheet">
+<title>treeChat</title>
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
 <div id="chat_window">
   <div id="message_window"></div>
@@ -40,26 +41,23 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+var socket = io.connect('http://localhost:8080');
 socket.once('news', function (data, users_online){
   console.log(data);
   console.log('Users: ' + users_online);
   //sessionStorage.setItem('users', users_online);
   app_update_onlineUsers.online_users = users_online;
-  status();
 });
 
   //Уведомление о подключении других пользователей
 socket.on('user connected', function(data){
   console.log('New user connected. Users: ' + data);
   app_update_onlineUsers.online_users++;
-  status();
 });
 
 socket.on('user disconnect', function(data){
   console.log('User disconnect. Users: ' + data);
   app_update_onlineUsers.online_users--;
-  status();
 })
 socket.on('new msg', function(data)
  {//Ожидаем сообщения от пользователей
@@ -73,7 +71,11 @@ socket.on('new msg', function(data)
     div.innerHTML = str;
     message_window.appendChild(div);
     scroll_toEnd("message_window");
+    sound_getMSG();
 })
+
+//document.addEventListener('visibilitychange', sound_getMSG, false);
+
 function sendText(){
   var text = document.getElementById("message_input").value;//Получаем текст из input
   socket.emit('my other event', text);//вызываем событие и отправляет текст
@@ -83,9 +85,16 @@ function scroll_toEnd(id){
   var block = document.getElementById(id);
   block.scrollTop = block.scrollHeight;
 }
-function status()
+
+function sound_getMSG()
 {
-  console.log('users: ' + users);
+  if(document.visibilityState == "hidden")//Если страница скрыта
+  {
+  var audio = new Audio();//Создаём новый элемент audio
+  audio.src = 'sound/send_msg.mp3'; //путь
+  audio.autoplay = true; //Автоматически запускается
+  console.log("test: music");
+  }
 }
 
 ///////////////////////////VUE JS////////////////////////////////
@@ -97,6 +106,5 @@ data: {
 })
 ////////////////////////////////////////////////////////////////////
 </script>
-
 </body>
 </html>
