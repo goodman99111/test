@@ -5,66 +5,70 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="js/ion.sound.min.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
+<div id="list_users">
+  <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
+  <div id="list_user_window"></div>
+</div>
 <div id="chat_window">
   <div id="message_window"></div>
-  <textarea max-width="50" style="width:70% "id="message_input" cols="90" id="area"></textarea>
-  <!--<button id="button_send" type="button" style="margin-left:70%" onclick="create()">Press</button>  -->
-  <!--<div  id="button_send" style=" margin-left:70%" onclick="create()"><p id="textButton">Отправить</p></div>-->
+  <textarea id="input_msg" max-width="50" style="width:70% "id="message_input" cols="90" id="area"></textarea>
   </div>
+
+
+
 <script>
 var users = sessionStorage.getItem('users');
+var nickname = getRandomName(1, 1000000)
 window.online = 0;
-
-function send(e)
-{
-//e = e ||  window.event;
+function send(e) {
 if(e.charCode == 13) {
-  document.getElementById('message_input').blur();
-  var text = document.getElementById("message_input").value;
-  //document.getElementById("message_input").selectionStart = 0;
+  document.getElementById('input_msg').blur();
+  var text = document.getElementById("input_msg").value;
     if(text!="") {
       var str = '<div class="msg_m">\
         <div class="msg_top_line"></div>\
-        <span class="msg_text_m_style">'+ text +'</span>\
+        <span class="msg_text_m_style">'+ nickname + ': '+ text +'</span>\
         </div<\
         ';
  var div = document.createElement('div');
  div.innerHTML = str;
  message_window.appendChild(div);
  sendText();
- document.getElementById("message_input").value = "";
+ document.getElementById("input_msg").value = "";
  scroll_toEnd("message_window");
   }
  }
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+var socket = io.connect('http://localhost:8080');
 socket.once('news', function (data, users_online){
   console.log(data);
   console.log('Users: ' + users_online);
-  //sessionStorage.setItem('users', users_online);
   app_update_onlineUsers.online_users = users_online;
 });
 
   //Уведомление о подключении других пользователей
-socket.on('user connected', function(data){
+socket.on('user connected', function(data)
+ {
   console.log('New user connected. Users: ' + data);
   app_update_onlineUsers.online_users++;
-});
+ });
 
-socket.on('user disconnect', function(data){
+socket.on('user disconnect', function(data)
+ {
   console.log('User disconnect. Users: ' + data);
   app_update_onlineUsers.online_users--;
-})
+ })
 socket.on('new msg', function(data)
  {//Ожидаем сообщения от пользователей
   console.log('get: ' + data);
   var str = '<div class="msg_m">\
     <div class="msg_top_line"></div>\
-    <span class="msg_text_m_style">'+ data +'</span>\
+    <span class="msg_text_m_style">' + data +'</span>\
     </div<\
     ';
     var div = document.createElement('div');
@@ -72,32 +76,58 @@ socket.on('new msg', function(data)
     message_window.appendChild(div);
     scroll_toEnd("message_window");
     sound_getMSG();
+    //ion.sound.play("send_msg");
+
 })
 
 //document.addEventListener('visibilitychange', sound_getMSG, false);
 
 function sendText(){
-  var text = document.getElementById("message_input").value;//Получаем текст из input
+  var text = nickname + ": " + document.getElementById("input_msg").value;//Получаем текст из input
   socket.emit('my other event', text);//вызываем событие и отправляет текст
   console.log("send: " + text);
 }
+
+//Прокрутка окна с сообщениями вниз
 function scroll_toEnd(id){
   var block = document.getElementById(id);
   block.scrollTop = block.scrollHeight;
 }
 
+//Воспроизведение звука, когда рприходит сообщение
 function sound_getMSG()
-{
-  if(document.visibilityState == "hidden")//Если страница скрыта
-  {
+ {
+  //window.focus();
   var audio = new Audio();//Создаём новый элемент audio
-  audio.src = 'sound/send_msg.mp3'; //путь
+  audio.src = 'sound/send_msg.mp3'; //путь к звуку
   audio.autoplay = true; //Автоматически запускается
-  console.log("test: music");
-  }
+  audio.preload = 'auto';
+ }
+
+//Устанавливает рандомное имя подключенному клиенту
+ function getRandomName(min, max) {
+    return "user" + Math.floor(Math.random() * (max - min + 1)) + min;
 }
+//Звуки//
+document.addEventListener("DOMContentLoaded", function(event) {
+  //do work
+  ion.sound({
+    sounds: [
+      {
+        name: "send_msg"
+      }
+    ],
+    volume: 1.0,
+    path: "sounds/"
+    //preload: true
+  });
+});
+
+
+/////////////////////////////////////////////////////////////////
 
 ///////////////////////////VUE JS////////////////////////////////
+//Онлайн
 var app_update_onlineUsers = new Vue({
 el: '#online_users',
 data: {

@@ -59,6 +59,7 @@ body {
   text-align: center;
 }
 
+/*Раздел "никнейм" и "онлайн юзеры" */
 #online_users {
   position: absolute;
   left: 45%;
@@ -66,6 +67,53 @@ body {
   font: 15pt sans-serif;
   color: #4F6782;
 }
+#textarea_nickname {
+  position: absolute;
+  width: 7%;
+  resize: none;
+  background-color: #484b51;
+  font-size: 14px;
+  color: #c6d2d8;
+  font-family: 'Monaco', #484b51, monospace;
+  border: 1px solid #42454a;
+  position: absolute;
+  text-align: left;
+  outline: none;
+  /*максимальное значение символов */
+
+}
+
+#nickname {
+  position: absolute;
+  margin-left: 0.4%;
+  margin-top: 1%;
+  width: 9%;
+  height: 4%;
+}
+
+#list_users {
+  width: 10%;
+  height: 40%;
+  border: 1px solid #181a1f;
+  display:inline-block;
+  float: right;
+  margin-top: 5.5%;
+  margin-right: 9.5%;
+  border-radius: 20px;
+  background-color: #36393f;
+}
+
+#list_user_window {
+  margin-top: 3.8%;
+  margin-left: 0.4%;
+  position: absolute;
+  height: 29%;
+  width: 9%;
+  border: 1px solid #42454a;
+  overflow: auto;
+}
+
+/*--------------------------------*/
 .msg_m {
   /*border: 1px solid gray;*/
   height: 8%;
@@ -102,7 +150,7 @@ body {
   color: #c6d2d8;
 }
 
-textarea {
+#input_msg{
   /*border-top: 1px solid #f0f0f0;*/
   /*border-left: 1px solid #f0f0f0;*/
   resize: none;

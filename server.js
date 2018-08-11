@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 
 
 var users_online = 0;
+var users;
 
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
