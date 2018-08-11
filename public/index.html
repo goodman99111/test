@@ -5,8 +5,7 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
-<script src="js/ion.sound.min.js"></script>
+<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
 <div id="list_users">
   <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
@@ -44,7 +43,7 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
 socket.once('news', function (data, users_online){
   console.log(data);
   console.log('Users: ' + users_online);
@@ -108,22 +107,6 @@ function sound_getMSG()
  function getRandomName(min, max) {
     return "user" + Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//Звуки//
-document.addEventListener("DOMContentLoaded", function(event) {
-  //do work
-  ion.sound({
-    sounds: [
-      {
-        name: "send_msg"
-      }
-    ],
-    volume: 1.0,
-    path: "sounds/"
-    //preload: true
-  });
-});
-
-
 /////////////////////////////////////////////////////////////////
 
 ///////////////////////////VUE JS////////////////////////////////
