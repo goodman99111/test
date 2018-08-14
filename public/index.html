@@ -5,7 +5,7 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
 <div id="list_users">
   <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
@@ -52,7 +52,7 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
 socket.once('news', function (data, users_online, nick, nick_users){
   console.log(data);
   console.log('Users: ' + users_online);
