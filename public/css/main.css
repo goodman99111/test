@@ -104,13 +104,30 @@ body {
 }
 
 #list_user_window {
-  margin-top: 3.8%;
+  margin-top: 5%;
   margin-left: 0.4%;
   position: absolute;
-  height: 29%;
+  height: 26%;
   width: 9%;
   border: 1px solid #42454a;
   overflow: auto;
+}
+
+#button_send_nick {
+  border: 1px solid green;
+  width: 6%;
+  height: 15;
+  position: absolute;
+  margin-top: 3.1%;
+  margin-left: 1.8%;
+  text-align: center;
+}
+
+.lineListUsers{
+  margin-left: 5%;
+  margin-top: 0%;
+  height: 3%;
+  color: #c6d2d8;
 }
 
 /*--------------------------------*/
@@ -121,7 +138,7 @@ body {
   max-width: 95%;
   margin-left: 1.5%;
   margin-top: 3%;
-  top: 20px;
+  top: 00px;
   /*border-radius: 10px;*/
   text-align: left;
   /*display: inline;*/

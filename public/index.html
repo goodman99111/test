@@ -5,11 +5,17 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
 <div id="list_users">
   <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
-  <div id="list_user_window"></div>
+  <!--<div id="button_send_nick" class="button">Войти</div>-->
+  <div id="list_user_window">
+      <blog-post v-for="title in nick"
+      v-bind:key="title.key"
+      v-bind:title="title.title">
+     </blog-post>
+  </div>
 </div>
 <div id="chat_window">
   <div id="message_window"></div>
@@ -19,9 +25,12 @@
 
 
 <script>
-var users = sessionStorage.getItem('users');
-var nickname = getRandomName(1, 1000000)
+var nickname;
+var nicks;
+
 window.online = 0;
+
+
 function send(e) {
 if(e.charCode == 13) {
   document.getElementById('input_msg').blur();
@@ -43,24 +52,31 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
-socket.once('news', function (data, users_online){
+var socket = io.connect('http://localhost:8080');
+socket.once('news', function (data, users_online, nick, nick_users){
   console.log(data);
   console.log('Users: ' + users_online);
+  nickname = nick;
+  for(var i = 0; i < nick_users.length; i++)
+  {
+    app_list_users.nick.push({title: nick_users[i]});
+  }
+  //app_list_users.nick = nicks;
   app_update_onlineUsers.online_users = users_online;
 });
 
   //Уведомление о подключении других пользователей
 socket.on('user connected', function(data)
  {
-  console.log('New user connected. Users: ' + data);
   app_update_onlineUsers.online_users++;
+  app_list_users.nick.push({title: data});
  });
 
 socket.on('user disconnect', function(data)
  {
-  console.log('User disconnect. Users: ' + data);
   app_update_onlineUsers.online_users--;
+  var index = app_list_users.nick.findIndex(obj => obj.title == data);
+  app_list_users.nick.splice(index, 1);
  })
 socket.on('new msg', function(data)
  {//Ожидаем сообщения от пользователей
@@ -75,7 +91,6 @@ socket.on('new msg', function(data)
     message_window.appendChild(div);
     scroll_toEnd("message_window");
     sound_getMSG();
-    //ion.sound.play("send_msg");
 
 })
 
@@ -116,6 +131,18 @@ el: '#online_users',
 data: {
   online_users: ''
 }
+})
+
+
+Vue.component('blog-post', {
+  props: ['title'],
+  template: '<p class="lineListUsers">{{title}}</p>'
+})
+var app_list_users = new Vue({
+  el: '#list_user_window',
+  data: {
+    nick: []
+  }
 })
 ////////////////////////////////////////////////////////////////////
 </script>
