@@ -1,6 +1,6 @@
 
 
-var app = require('express')();
+var app = rpequire('express')();
 var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
