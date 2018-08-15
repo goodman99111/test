@@ -3,6 +3,9 @@
 //Id[0], Nick[0]- один пользователь
 
 //Заменяем рандомный ник на ник созданный пользователем
+
+"use strict"
+
 function addNick(arrID, arrNick, id, nick){
   var index = arrID.indexOf(id);
   arrNick[index] = nick;

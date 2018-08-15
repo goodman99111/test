@@ -5,11 +5,11 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <div id="online_users">Online: {{online_users}}</div>
 <div id="list_users">
   <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
-  <!--<div id="button_send_nick" class="button">Войти</div>-->
+  <div id="button_send_nick" onclick="sendNick()" class="button"><p id="ButtonText">Сменить</div>
   <div id="list_user_window">
       <blog-post v-for="title in nick"
       v-bind:key="title.key"
@@ -52,7 +52,7 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('http://treechat-treechat.193b.starter-ca-central-1.openshiftapps.com');
+var socket = io.connect('http://localhost:8080');
 socket.once('news', function (data, users_online, nick, nick_users){
   console.log(data);
   console.log('Users: ' + users_online);
@@ -94,12 +94,33 @@ socket.on('new msg', function(data)
 
 })
 
-//document.addEventListener('visibilitychange', sound_getMSG, false);
+socket.on('enemy_change_nick', function(newnick, oldnick){
+  changeNick(newnick, oldnick);
+})
 
 function sendText(){
   var text = nickname + ": " + document.getElementById("input_msg").value;//Получаем текст из input
   socket.emit('my other event', text);//вызываем событие и отправляет текст
   console.log("send: " + text);
+}
+
+function changeNick(newnick, oldnick){
+  //получаем индекс нашего ника в массиве, чтобы потом с ним работать
+  var index = app_list_users.nick.findIndex(obj => obj.title == oldnick);
+  //удаляем старый ник
+  app_list_users.nick.splice(index, 1);
+  //добавляем новый ник
+  app_list_users.nick.push({title: newnick});
+}
+
+function sendNick()
+{
+  var index = app_list_users.nick.findIndex(obj => obj.title == nickname);
+  nickname = document.getElementById('textarea_nickname').value; //меняем ник пользователя
+  app_list_users.nick.splice(index, 1);
+  app_list_users.nick.push({title: nickname});
+  socket.emit('change_nick', nickname);//отправляем новый ник на сервер
+
 }
 
 //Прокрутка окна с сообщениями вниз
