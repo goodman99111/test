@@ -1,0 +1,6 @@
+#preview{
+    border: 1px solid green;
+    position: relative;
+    margin-top: 50%;
+    display: none;
+}

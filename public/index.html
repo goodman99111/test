@@ -1,11 +1,15 @@
- >
+<html>
 <head>
 <link href="css/main.css" type="text/css" rel="stylesheet">
+<link href="css/dragdrop.css" type="text/css" rel="stylesheet">
+<link href="css/form.css" type="text/css" rel="stylesheet">
+<link href="css/preview.css" type="text/css" rel="stylesheet">
 <title>treeChat</title>
 </head>
-<body>
+<body id="activ-area" onload="loadEvent()">
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://visionary-chat.appspot.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="js/dragdrop.js" ></script> 
 <div id="online_users">Online: {{online_users}}</div>
 <div id="list_users">
   <div id="nickname"><textarea onKeyPress="return ( this.value.length < 50 );" style="width:100%; height:90% "  id="textarea_nickname"></textarea></div>
@@ -19,11 +23,20 @@
 </div>
 <div id="chat_window">
   <div id="message_window"></div>
-  <textarea id="input_msg" max-width="50" style="width:70% "id="message_input" cols="90" id="area"></textarea>
+  <div id="msg_panel">
+    <textarea id="input_msg" max-width="50" style="width:70% " cols="90" id="area"></textarea>
+    <div id="form" onclick="document.getElementById('upload').click()">
+      <form>
+        <span id="back_download"></span>
+        <!--<img src="../public/img/263096.png" width="100%" height="100%">-->
+	      <input style="display:none" type="file" id="upload">
+      </form>
+   </div>
   </div>
-
-
-
+</div>
+<div id="area_window" >
+    
+</div>
 <script>
 var nickname;
 var nicks;
@@ -52,11 +65,13 @@ if(e.charCode == 13) {
 }
 document.addEventListener('keypress', send);
 
-var socket = io.connect('https://visionary-chat.appspot.com');
-socket.once('news', function (data, users_online, nick, nick_users){
+var socket = io.connect('http://localhost:8080');
+
+socket.once('news', function (data, users_online, nick, nick_users, history_msg){
   console.log(data);
   console.log('Users: ' + users_online);
   nickname = nick;
+  loadHistory(history_msg);                                //Загружаем историю сообщений
   for(var i = 0; i < nick_users.length; i++)
   {
     app_list_users.nick.push({title: nick_users[i]});
@@ -73,19 +88,20 @@ socket.on('user connected', function(data)
  });
 
 socket.on('user disconnect', function(data)
- {
-  app_update_onlineUsers.online_users--;
-  var index = app_list_users.nick.findIndex(obj => obj.title == data);
-  app_list_users.nick.splice(index, 1);
- })
+    {
+      app_update_onlineUsers.online_users--;
+      var index = app_list_users.nick.findIndex(obj => obj.title == data);
+      app_list_users.nick.splice(index, 1);
+    })
 socket.on('new msg', function(data)
- {//Ожидаем сообщения от пользователей
-  console.log('get: ' + data);
-  var str = '<div class="msg_m">\
-    <div class="msg_top_line"></div>\
-    <span class="msg_text_m_style">' + data +'</span>\
-    </div<\
-    ';
+ {
+   //Ожидаем сообщения от пользователей
+    console.log('get: ' + data);
+    var str = '<div class="msg_m">\
+      <div class="msg_top_line"></div>\
+      <span class="msg_text_m_style">' + data +'</span>\
+      </div<\
+      ';
     var div = document.createElement('div');
     div.innerHTML = str;
     message_window.appendChild(div);
@@ -98,9 +114,13 @@ socket.on('enemy_change_nick', function(newnick, oldnick){
   changeNick(newnick, oldnick);
 })
 
+socket.on('img', function(data){
+  load_img(nickname,data);
+});
+
 function sendText(){
   var text = nickname + ": " + document.getElementById("input_msg").value;//Получаем текст из input
-  socket.emit('my other event', text);//вызываем событие и отправляет текст
+  socket.emit('send_msg', text);//вызываем событие и отправляет текст
   console.log("send: " + text);
 }
 
@@ -167,5 +187,47 @@ var app_list_users = new Vue({
 })
 ////////////////////////////////////////////////////////////////////
 </script>
+
+<script>
+  /*
+let activ_area = document.getElementById('activ-area');
+let window_area = document.getElementById('area-window');
+
+;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    activ_area.addEventListener(eventName, preventDefaults, false)
+  })
+
+;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    window_area.addEventListener(eventName, preventDefaults, false)
+  })
+
+function preventDefaults (e) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+//Событие которое срабатывает при переносе файла на страницу
+;['dragenter', 'dragover'].forEach(eventName => { 
+    activ_area.addEventListener(eventName, createForm, false)
+  })
+
+//Событие которое срабатывает, когда файл покидает приделы страницы
+;['dragleave'].forEach(eventName => {
+    activ_area.addEventListener(eventName, delForm, false)
+})
+
+function createForm()
+{
+    window_area.classList.add('main-area');
+}
+
+function delForm()
+{
+  
+}
+*/
+</script>
+<script src="js/chatAPI.js"></script>
+<script src="js/download.js"></script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+.main-area{
+    border: 2px dashed #ccc;
+    height: 15%;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #ddd;
+}
+
+.nonactiv{
+    display: none;
+}
+
+.highlight {
+    border-color: purple;
+}
+
+#fileElem {
+    display: none;
+  }
+
+#send_file_form{
+    text-align: center;
+}
+
+#info_load_file{
+
+    margin-top: 4%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 120%;
+}

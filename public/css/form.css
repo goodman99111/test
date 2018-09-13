@@ -1,0 +1,23 @@
+#lab {
+    height: 100%;
+    border: 1px solid #42454a;
+    padding-left: 40px;
+    /*padding-top: 30%;*/
+    /*top: 100%;*/
+}
+
+#form{
+    /*background-image: url('../img/263096.png');*/
+    position: absolute;
+    top: 25%;
+    height: 44%;
+    width: 5%;
+    left: 85%;
+    border: 1px solid  #42454a;
+    cursor: pointer;
+}
+
+#back_download {
+    padding-left: 30%;
+    padding-top: -30%;
+}
