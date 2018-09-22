@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var sysNick = require("./fun/usersAPI");
+var authorize = require("./database")
 var fs = require('fs');
 
 
@@ -51,6 +52,27 @@ socket.on('Upload', function(data){ //Необходима проверка пр
 	});
 	socket.emit('img', data['Name']);
 });
+
+socket.on('login_req', function(nick, pass){
+	let result = null;
+	authorize.login(nick, pass, socket);
+	
+	//console,log(result);
+	/*
+	if(authorize.login(nick, pass)){
+		check = true;
+		socket.emit('login_res', check);
+		console.log('123');
+	}
+	else{
+		check = false;
+		socket.emit('login_res', check);
+		console.log('123321');
+	}
+	*/
+})
+
+
 
 });
 

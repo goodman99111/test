@@ -33,3 +33,7 @@ function broadcastMessage(){
 function closeRoom(){
 
 }
+//Сменить ник
+function changeNick(){
+	
+}

@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Запустить программу",
-            "program": "${workspaceFolder}/public\\js\\dragdrop.js"
+            "program": "${workspaceFolder}/server.js"
         }
     ]
 }

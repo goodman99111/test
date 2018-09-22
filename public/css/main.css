@@ -1,8 +1,11 @@
 body {
   background-color: #2f3136;
+  margin: 10px;
+  width: 98%;
 }
 
 #chat_window {
+  z-index: 1;
   background-color: #36393f;
   align-items: flex-start;
   width: 60%;
@@ -96,10 +99,11 @@ body {
 #list_users {
   width: 10%;
   height: 40%;
+  max-height: 300px;
   border: 1px solid #181a1f;
   display:inline-block;
   float: right;
-  margin-top: 5.5%;
+  margin-top: 0%;
   margin-right: 9.5%;
   border-radius: 20px;
   background-color: #36393f;

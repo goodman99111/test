@@ -1,0 +1,60 @@
+#authorize{
+    z-index: 10000;
+    background-color: white;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    margin-top: -4%;
+    margin-left: -1%;
+    position: absolute;
+}
+
+#panel_authorize{
+    margin-top: 15%;
+    margin-left: 35%;
+    opacity: 1;
+    width: 30%;
+    height: 20%;
+    border: 1px solid gray;
+    z-index: 10001;
+    position: absolute;
+}
+
+#input_login{
+    resize: none; 
+    height: 18%; 
+    width: 30%;
+    margin-top: 6%;
+    margin-left: 5.2%;
+}
+
+#input_password{
+    resize: none;
+    height: 18%;
+    width: 30%;
+    margin-top: 1%;
+    margin-left: 4.3%;
+}
+
+.closepanel{
+    display: none;
+}
+
+.ERROR_INCORRECT{
+    display: inline;
+}
+
+#button_enter{
+    text-align: center;
+    /*width: 13%;
+    height: 17%;
+    */
+    margin-top: 5%;
+    border: 1px solid gray;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#button_enter:hover{
+    background-color: #C9C9C9;
+}

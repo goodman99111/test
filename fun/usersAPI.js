@@ -7,6 +7,7 @@
 "use strict"
 var arrID = [];
 var arrNick = [];
+var oldNick = []; //ники которые заняты
 
 function addNick(id, nick){
   var index = arrID.indexOf(id);
